@@ -1,3 +1,6 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE FlexibleInstances #-}
+
 module Algebraic where
 
 data PugType = PugData
@@ -67,3 +70,26 @@ areCars = all isCar
 
 getManu :: Vehicle -> Manufacturer
 getManu (Car m _) = m
+
+data Example2 a b = Example2 a b deriving (Eq, Show)
+
+class TooMany a where
+  tooMany :: a -> Bool
+
+instance TooMany Int where
+  tooMany n = n > 42
+
+newtype Goats = Goats Int deriving (Show, Eq, TooMany)
+
+newtype SpecialTooMany = SpecialTooMany (Int, String) deriving (Show, Eq)
+
+instance TooMany SpecialTooMany where
+  tooMany (SpecialTooMany (n,s)) = tooMany n
+
+newtype TooMany3 = TooMany3 (Int, Int) deriving (Show, Eq)
+
+instance TooMany TooMany3 where
+  tooMany (TooMany3 (n1, n2)) = tooMany (n1 + n2)
+
+instance (Num a, TooMany a) => TooMany (a, a) where
+  tooMany (a, a') = (tooMany a) && (tooMany a')
