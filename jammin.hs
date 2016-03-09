@@ -23,7 +23,7 @@ row2 = Jam Apple 20
 row3 = Jam Peach 30
 row4 = Jam Plum 40
 row5 = Jam Blackberry 3
-row6 = Jam Apple 5
+row6 = Jam Apple 10
 allJam = [row1, row2, row3, row4, row5, row6]
 
 totalJars :: [JamJars] -> Int
@@ -43,4 +43,4 @@ sortJars :: [JamJars] -> [JamJars]
 sortJars = sortBy compareKind
 
 groupJam :: [JamJars] -> [[JamJars]]
-groupJam = groupBy ((==EQ) . compare)
+groupJam = groupBy (\a b -> (compareKind a b) == EQ) . sortJars

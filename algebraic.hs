@@ -93,3 +93,55 @@ instance TooMany TooMany3 where
 
 instance (Num a, TooMany a) => TooMany (a, a) where
   tooMany (a, a') = (tooMany a) && (tooMany a')
+
+data Fiction = Fiction deriving Show
+data Nonfiction = Nonfiction deriving Show
+
+data BookType =
+  FictionBook Fiction
+  | NonfictionBook Nonfiction
+    deriving Show
+
+type AuthorName = String
+
+data Author = Author (AuthorName, BookType)
+
+-- data FlowerType = Gardenia
+--   | Daisy
+--   | Rose
+--   | Lilac
+--     deriving Show
+
+type Gardener = String
+
+data Garden =
+  Gardenia Gardener
+  | Rose Gardener
+  | Lilac Gardener
+  | Daisy Gardener
+    deriving Show
+
+
+data GuessWhat =
+  Chickenbutt deriving (Eq, Show)
+
+data Id a =
+  MkId a deriving (Eq, Show)
+
+data Product a b =
+  Product a b deriving (Eq, Show)
+
+data Sum a b =
+  First a
+  | Second b
+    deriving (Eq, Show)
+
+data RecordProduct a b =
+  RecordProduct { pfirst :: a
+                , psecond :: b }
+  deriving (Eq, Show)
+
+newtype NumCow = NumCow Int deriving (Eq, Show)
+newtype NumPig = NumPig Int deriving (Eq, Show)
+data Farmhouse = Farmhouse NumCow NumPig deriving (Eq, Show)
+type Farmhouse' = Product NumCow NumPig
