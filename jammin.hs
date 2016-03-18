@@ -42,5 +42,6 @@ compareKind (Jam k _) (Jam k' _) = compare k k'
 sortJars :: [JamJars] -> [JamJars]
 sortJars = sortBy compareKind
 
+-- def took me a while to realize that sorting was required for groupBy to work properly
 groupJam :: [JamJars] -> [[JamJars]]
 groupJam = groupBy (\a b -> (compareKind a b) == EQ) . sortJars

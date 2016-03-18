@@ -145,3 +145,67 @@ newtype NumCow = NumCow Int deriving (Eq, Show)
 newtype NumPig = NumPig Int deriving (Eq, Show)
 data Farmhouse = Farmhouse NumCow NumPig deriving (Eq, Show)
 type Farmhouse' = Product NumCow NumPig
+
+newtype NumSheep = NumSheep Int deriving (Eq, Show)
+data BigFarmhouse = BigFarmhouse NumCow NumPig NumSheep
+type BigFarmhouse' = Product NumCow (Product NumPig NumSheep)
+
+type Name = String
+type Age = Int
+type LovesMud = Bool
+
+type PoundsOfWool = Int
+
+data CowInfo = CowInfo Name Age deriving (Eq, Show)
+data PigInfo = PigInfo Name Age LovesMud deriving (Eq, Show)
+data SheepInfo = SheepInfo Name Age PoundsOfWool deriving (Eq, Show)
+
+data Animal = Cow CowInfo | Pig PigInfo | Sheep SheepInfo deriving (Eq, Show)
+type Animal' = Sum CowInfo (Sum PigInfo SheepInfo)
+
+data OperatingSystem = Linux | OpenBSD | Mac | Windows deriving (Eq, Show)
+data ProgrammingLanguage = Haskell | Agda | Idris | PureScript deriving (Eq, Show)
+
+data Programmer =
+  Programmer { os :: OperatingSystem
+             , lang :: ProgrammingLanguage }
+  deriving (Eq, Show)
+
+allOperatingSystems :: [OperatingSystem]
+allOperatingSystems = [Linux, OpenBSD, Mac, Windows]
+
+allLanguages :: [ProgrammingLanguage]
+allLanguages = [Haskell, Agda, Idris, PureScript]
+
+allProgrammers :: [Programmer]
+allProgrammers =
+  concat $ map (\os -> map (\lang -> Programmer { lang = lang, os = os }) allLanguages) allOperatingSystems
+
+
+data Quantum = A | B | C deriving (Eq, Show)
+
+convert :: Quantum -> Bool
+convert A = True
+convert B = True
+convert C = True
+
+convert2 :: Quantum -> Bool
+convert2 A = True
+convert2 B = True
+convert2 C = False
+
+convert3 :: Quantum -> Bool
+convert3 A = True
+convert3 B = False
+convert3 C = True
+
+-- 2^3 possible functions since we have a choice of 2 values for each of 3 possible inputs
+
+data Quad = One | Two | Three | Four deriving (Eq, Show)
+
+--1. 8 possible values
+--2. 16 possible values
+--3. 4^4 possible values
+--4. 8 possible values
+--5. 16 possible values
+--6. 65536 possible values
